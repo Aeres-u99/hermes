@@ -5,10 +5,16 @@ import (
 	"flag"
 	"fmt"
 	"github.com/Aeres-u99/hermes/v2/internal"
+	sitter "github.com/tree-sitter/go-tree-sitter"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
+	// go_ts "github.com/tree-sitter/tree-sitter-go/bindings/go"
+	// js_ts "github.com/tree-sitter/tree-sitter-javascript/bindings/go"
+	py_ts "github.com/tree-sitter/tree-sitter-python/bindings/go"
+	// rs_ts "github.com/tree-sitter/tree-sitter-rust/bindings/go"
+	// ts_ts "github.com/tree-sitter/tree-sitter-typescript/bindings/go"
 )
 
 func main() {
@@ -39,6 +45,31 @@ func main() {
 		Imports: []string{},
 		Symbols: []internal.Symbol{},
 	}
+	parser := sitter.NewParser()
+	tsLang := sitter.NewLanguage(py_ts.Language())
+	parser.SetLanguage(tsLang)
+	tree := parser.Parse(content, nil)
+	root := tree.RootNode()
+	fmt.Printf("Root: %s\n", root.Kind())
+	imports := []string{}
+	for i := uint(0); i < root.ChildCount(); i++ {
+		child := root.Child(i)
+		if child.Kind() != "import_statement" {
+			continue
+		}
+
+		for j := uint(0); j < child.ChildCount(); j++ {
+			grandchild := child.Child(j)
+
+			if grandchild.Kind() == "dotted_name" {
+				imports = append(imports, grandchild.Utf8Text(content))
+			}
+
+		}
+	}
+	fileInfo := output.Files[test]
+	fileInfo.Imports = imports
+	output.Files[test] = fileInfo
 	data, err := json.Marshal(output)
 	if err != nil {
 		panic(err)
