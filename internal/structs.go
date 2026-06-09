@@ -38,6 +38,11 @@ type CTag struct {
 }
 
 type AnalysisResult struct {
+	Files map[string]FileInfo
+	Index map[string]Location
+}
+
+type FileAnalysis struct {
 	FileInfo FileInfo
 	Index    map[string]Location
 }

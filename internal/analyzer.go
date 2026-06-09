@@ -1,11 +1,13 @@
 package internal
 
 import (
+	"io/fs"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
-func AnalyzeFile(path string) (*AnalysisResult, error) {
+func AnalyzeFile(path string) (*FileAnalysis, error) {
 	content, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
@@ -29,8 +31,57 @@ func AnalyzeFile(path string) (*AnalysisResult, error) {
 		Symbols: symbols,
 	}
 
-	return &AnalysisResult{
+	return &FileAnalysis{
 		FileInfo: fileInfo,
 		Index:    index,
 	}, nil
+}
+
+func AnalyzeRepo(root string) (*AnalysisResult, error) {
+	merged := &AnalysisResult{
+		Files: make(map[string]FileInfo),
+		Index: make(map[string]Location),
+	}
+
+	err := filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if d.IsDir() {
+			return nil
+		}
+
+		result, err := AnalyzeFile(path)
+		if err != nil {
+			return err
+		}
+
+		MergeFileAnalysis(path, result, merged)
+
+		return nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return merged, nil
+}
+
+func IsDir(path string) bool {
+	info, err := os.Stat(path)
+	if err != nil {
+		return false
+	}
+
+	return info.IsDir()
+}
+
+func MergeFileAnalysis(path string, file *FileAnalysis, result *AnalysisResult) {
+	result.Files[path] = file.FileInfo
+
+	for k, v := range file.Index {
+		result.Index[k] = v
+	}
 }
