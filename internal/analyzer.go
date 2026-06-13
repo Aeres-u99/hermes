@@ -1,10 +1,11 @@
 package internal
 
 import (
-	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
+
+	gitignore "github.com/monochromegane/go-gitignore"
 )
 
 func AnalyzeFile(path string) (*FileAnalysis, error) {
@@ -38,21 +39,25 @@ func AnalyzeFile(path string) (*FileAnalysis, error) {
 }
 
 func AnalyzeRepo(root string) (*AnalysisResult, error) {
-	ignore, err := LoadIgnoreFile(root)
-	if err != nil {
-		return nil, err
-	}
+	gitIgnore, err := gitignore.NewGitIgnore(".hermesignore", root)
 
 	merged := &AnalysisResult{
 		Files: make(map[string]FileInfo),
 		Index: make(map[string]Location),
 	}
 
-	err = filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
+	err = filepath.WalkDir(root, func(path string, d os.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
-		if ShouldIgnore(d.Name(), ignore) {
+
+		relPath, err := filepath.Rel(root, path)
+		if err != nil {
+			return err
+		}
+		//		matched := gitIgnore.Match(relPath, d.IsDir())
+
+		if gitIgnore.Match(relPath, d.IsDir()) {
 			if d.IsDir() {
 				return filepath.SkipDir
 			}
@@ -89,11 +94,14 @@ func IsDir(path string) bool {
 	return info.IsDir()
 }
 
-func MergeFileAnalysis(path string, file *FileAnalysis, result *AnalysisResult) {
+func MergeFileAnalysis(
+	path string,
+	file *FileAnalysis,
+	result *AnalysisResult,
+) {
 	result.Files[path] = file.FileInfo
 
 	for k, v := range file.Index {
 		result.Index[k] = v
 	}
 }
-
