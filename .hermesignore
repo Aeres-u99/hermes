@@ -1,1 +1,11 @@
-sample/
+.git/
+sample/**
+sample/goru.go
+sample/code.py
+pkg/**
+internal/grammar/**
+go.mod
+go.sum
+.hermesignore
+*.md
+*.json
