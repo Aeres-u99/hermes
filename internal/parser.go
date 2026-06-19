@@ -6,7 +6,10 @@ import (
 	"unsafe"
 
 	sitter "github.com/tree-sitter/go-tree-sitter"
+	c_ts "github.com/tree-sitter/tree-sitter-c/bindings/go"
+	cpp_ts "github.com/tree-sitter/tree-sitter-cpp/bindings/go"
 	go_ts "github.com/tree-sitter/tree-sitter-go/bindings/go"
+	java_ts "github.com/tree-sitter/tree-sitter-java/bindings/go"
 	js_ts "github.com/tree-sitter/tree-sitter-javascript/bindings/go"
 	py_ts "github.com/tree-sitter/tree-sitter-python/bindings/go"
 	rs_ts "github.com/tree-sitter/tree-sitter-rust/bindings/go"
@@ -20,9 +23,21 @@ type LanguageDefinition struct {
 
 func GetLanguage(lang string) *LanguageDefinition {
 	registry := map[string]LanguageDefinition{
+		"c": {
+			Language: c_ts.Language,
+			Imports:  extractCImports,
+		},
+		"cpp": {
+			Language: cpp_ts.Language,
+			Imports:  extractCImports,
+		},
 		"go": {
 			Language: go_ts.Language,
 			Imports:  extractGoImports,
+		},
+		"java": {
+			Language: java_ts.Language,
+			Imports:  extractJavaImports,
 		},
 		"javascript": {
 			Language: js_ts.Language,
@@ -51,6 +66,10 @@ func GetLanguage(lang string) *LanguageDefinition {
 }
 
 func ExtractImports(content []byte, lang string) []string {
+	if lang == "bazel" {
+		return uniqueSorted(extractBazelImports(content))
+	}
+
 	definition := GetLanguage(lang)
 	if definition == nil {
 		return []string{}
@@ -156,6 +175,66 @@ func extractRustImports(root *sitter.Node, content []byte) []string {
 	return imports
 }
 
+func extractJavaImports(root *sitter.Node, content []byte) []string {
+	imports := []string{}
+
+	walk(root, func(node *sitter.Node) {
+		if node.Kind() != "import_declaration" {
+			return
+		}
+
+		text := strings.TrimSpace(node.Utf8Text(content))
+		text = strings.TrimPrefix(text, "import")
+		text = strings.TrimSpace(text)
+		text = strings.TrimPrefix(text, "static")
+		text = strings.TrimSuffix(text, ";")
+		text = strings.TrimSpace(text)
+		if text != "" {
+			imports = append(imports, text)
+		}
+	})
+
+	return imports
+}
+
+func extractCImports(root *sitter.Node, content []byte) []string {
+	imports := []string{}
+
+	walk(root, func(node *sitter.Node) {
+		if node.Kind() != "preproc_include" {
+			return
+		}
+
+		path := node.ChildByFieldName("path")
+		if path != nil {
+			imports = append(imports, cleanStringLiteral(path.Utf8Text(content)))
+		}
+	})
+
+	return imports
+}
+
+func extractBazelImports(content []byte) []string {
+	imports := []string{}
+
+	for _, line := range strings.Split(string(content), "\n") {
+		line = strings.TrimSpace(line)
+		if !strings.HasPrefix(line, "load(") {
+			continue
+		}
+
+		line = strings.TrimPrefix(line, "load(")
+		line = strings.TrimSpace(line)
+		if line == "" {
+			continue
+		}
+
+		imports = append(imports, cleanStringLiteral(firstBazelLoadArg(line)))
+	}
+
+	return imports
+}
+
 func walk(node *sitter.Node, visit func(*sitter.Node)) {
 	if node == nil {
 		return
@@ -202,6 +281,24 @@ func firstChild(node *sitter.Node, kinds ...string) *sitter.Node {
 	return nil
 }
 
+func firstBazelLoadArg(value string) string {
+	if value == "" {
+		return ""
+	}
+
+	quote := value[0]
+	if quote != '"' && quote != '\'' {
+		return ""
+	}
+
+	end := strings.IndexByte(value[1:], quote)
+	if end < 0 {
+		return ""
+	}
+
+	return value[:end+2]
+}
+
 func cleanStringLiteral(value string) string {
 	value = strings.TrimSpace(value)
 	if len(value) < 2 {
@@ -211,6 +308,9 @@ func cleanStringLiteral(value string) string {
 	quote := value[0]
 	if quote == '"' || quote == '\'' || quote == '`' {
 		return strings.Trim(value, string(quote))
+	}
+	if quote == '<' {
+		return strings.TrimSuffix(strings.TrimPrefix(value, "<"), ">")
 	}
 
 	return value

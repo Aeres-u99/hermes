@@ -1,0 +1,1182 @@
+{
+ "v": 1,
+ "generated": "2026-06-19T17:35:08Z",
+ "files": {
+  ".gitignore": {
+   "lang": "Unknown",
+   "loc": 5,
+   "imports": [],
+   "symbols": []
+  },
+  "Makefile": {
+   "lang": "makefile",
+   "loc": 12,
+   "imports": [],
+   "symbols": [
+    {
+     "n": "BINARY_NAME",
+     "t": "macro",
+     "l": 1
+    },
+    {
+     "n": "CMD_PATH",
+     "t": "macro",
+     "l": 2
+    },
+    {
+     "n": "build",
+     "t": "target",
+     "l": 4
+    },
+    {
+     "n": "clean",
+     "t": "target",
+     "l": 10
+    },
+    {
+     "n": "run",
+     "t": "target",
+     "l": 7
+    }
+   ]
+  },
+  "cmd/hermes/main.go": {
+   "lang": "go",
+   "loc": 55,
+   "imports": [
+    "encoding/json",
+    "flag",
+    "fmt",
+    "github.com/Aeres-u99/hermes/v2/internal",
+    "os"
+   ],
+   "symbols": [
+    {
+     "n": "main.main",
+     "t": "func",
+     "l": 11
+    },
+    {
+     "n": "main",
+     "t": "package",
+     "l": 1
+    }
+   ]
+  },
+  "fetcher.sh": {
+   "lang": "Unknown",
+   "loc": 13,
+   "imports": [],
+   "symbols": []
+  },
+  "internal/analyzer.go": {
+   "lang": "go",
+   "loc": 108,
+   "imports": [
+    "github.com/monochromegane/go-gitignore",
+    "os",
+    "path/filepath",
+    "strings"
+   ],
+   "symbols": [
+    {
+     "n": "internal.AnalyzeFile",
+     "t": "func",
+     "l": 11,
+     "p": true
+    },
+    {
+     "n": "internal.AnalyzeRepo",
+     "t": "func",
+     "l": 41,
+     "p": true
+    },
+    {
+     "n": "internal.IsDir",
+     "t": "func",
+     "l": 88,
+     "p": true
+    },
+    {
+     "n": "internal.MergeFileAnalysis",
+     "t": "func",
+     "l": 97,
+     "p": true
+    },
+    {
+     "n": "gitignore",
+     "t": "packageName",
+     "l": 8
+    },
+    {
+     "n": "internal",
+     "t": "package",
+     "l": 1
+    }
+   ]
+  },
+  "internal/consts.go": {
+   "lang": "go",
+   "loc": 12,
+   "imports": [],
+   "symbols": [
+    {
+     "n": "internal.Call",
+     "t": "struct",
+     "l": 3,
+     "p": true
+    },
+    {
+     "n": "internal.Call.Callee",
+     "t": "method",
+     "l": 5,
+     "p": true
+    },
+    {
+     "n": "internal.Call.Caller",
+     "t": "method",
+     "l": 4,
+     "p": true
+    },
+    {
+     "n": "internal.Dependency",
+     "t": "struct",
+     "l": 8,
+     "p": true
+    },
+    {
+     "n": "internal.Dependency.Source",
+     "t": "method",
+     "l": 9,
+     "p": true
+    },
+    {
+     "n": "internal.Dependency.Target",
+     "t": "method",
+     "l": 10,
+     "p": true
+    },
+    {
+     "n": "internal",
+     "t": "package",
+     "l": 1
+    }
+   ]
+  },
+  "internal/ctags.go": {
+   "lang": "go",
+   "loc": 45,
+   "imports": [
+    "bytes",
+    "encoding/json",
+    "os/exec",
+    "strings"
+   ],
+   "symbols": [
+    {
+     "n": "internal.GetTags",
+     "t": "func",
+     "l": 10,
+     "p": true
+    },
+    {
+     "n": "internal",
+     "t": "package",
+     "l": 1
+    }
+   ]
+  },
+  "internal/lang.go": {
+   "lang": "go",
+   "loc": 42,
+   "imports": [
+    "path/filepath"
+   ],
+   "symbols": [
+    {
+     "n": "internal.DetectLanguage",
+     "t": "func",
+     "l": 5,
+     "p": true
+    },
+    {
+     "n": "internal",
+     "t": "package",
+     "l": 1
+    }
+   ]
+  },
+  "internal/lang_test.go": {
+   "lang": "go",
+   "loc": 37,
+   "imports": [
+    "testing"
+   ],
+   "symbols": [
+    {
+     "n": "internal.TestDetectLanguage",
+     "t": "func",
+     "l": 5,
+     "p": true
+    },
+    {
+     "n": "internal",
+     "t": "package",
+     "l": 1
+    }
+   ]
+  },
+  "internal/output.go": {
+   "lang": "go",
+   "loc": 25,
+   "imports": [
+    "time"
+   ],
+   "symbols": [
+    {
+     "n": "internal.BuildOutput",
+     "t": "func",
+     "l": 7,
+     "p": true
+    },
+    {
+     "n": "internal",
+     "t": "package",
+     "l": 1
+    }
+   ]
+  },
+  "internal/parser.go": {
+   "lang": "go",
+   "loc": 336,
+   "imports": [
+    "github.com/tree-sitter/go-tree-sitter",
+    "github.com/tree-sitter/tree-sitter-c/bindings/go",
+    "github.com/tree-sitter/tree-sitter-cpp/bindings/go",
+    "github.com/tree-sitter/tree-sitter-go/bindings/go",
+    "github.com/tree-sitter/tree-sitter-java/bindings/go",
+    "github.com/tree-sitter/tree-sitter-javascript/bindings/go",
+    "github.com/tree-sitter/tree-sitter-python/bindings/go",
+    "github.com/tree-sitter/tree-sitter-rust/bindings/go",
+    "github.com/tree-sitter/tree-sitter-typescript/bindings/go",
+    "sort",
+    "strings",
+    "unsafe"
+   ],
+   "symbols": [
+    {
+     "n": "internal.ExtractImports",
+     "t": "func",
+     "l": 68,
+     "p": true
+    },
+    {
+     "n": "internal.GetLanguage",
+     "t": "func",
+     "l": 24,
+     "p": true
+    },
+    {
+     "n": "internal.LanguageDefinition.Imports",
+     "t": "method",
+     "l": 21,
+     "p": true
+    },
+    {
+     "n": "internal.LanguageDefinition.Language",
+     "t": "method",
+     "l": 20,
+     "p": true
+    },
+    {
+     "n": "internal.LanguageDefinition",
+     "t": "struct",
+     "l": 19,
+     "p": true
+    },
+    {
+     "n": "c_ts",
+     "t": "packageName",
+     "l": 9
+    },
+    {
+     "n": "internal.cleanStringLiteral",
+     "t": "func",
+     "l": 302
+    },
+    {
+     "n": "internal.collectNodeText",
+     "t": "func",
+     "l": 250
+    },
+    {
+     "n": "cpp_ts",
+     "t": "packageName",
+     "l": 10
+    },
+    {
+     "n": "internal.extractBazelImports",
+     "t": "func",
+     "l": 217
+    },
+    {
+     "n": "internal.extractCImports",
+     "t": "func",
+     "l": 200
+    },
+    {
+     "n": "internal.extractGoImports",
+     "t": "func",
+     "l": 107
+    },
+    {
+     "n": "internal.extractJavaImports",
+     "t": "func",
+     "l": 178
+    },
+    {
+     "n": "internal.extractJavaScriptImports",
+     "t": "func",
+     "l": 127
+    },
+    {
+     "n": "internal.extractPythonImports",
+     "t": "func",
+     "l": 89
+    },
+    {
+     "n": "internal.extractRustImports",
+     "t": "func",
+     "l": 158
+    },
+    {
+     "n": "internal.firstBazelLoadArg",
+     "t": "func",
+     "l": 284
+    },
+    {
+     "n": "internal.firstChild",
+     "t": "func",
+     "l": 271
+    },
+    {
+     "n": "internal.firstNodeText",
+     "t": "func",
+     "l": 262
+    },
+    {
+     "n": "go_ts",
+     "t": "packageName",
+     "l": 11
+    },
+    {
+     "n": "internal",
+     "t": "package",
+     "l": 1
+    },
+    {
+     "n": "java_ts",
+     "t": "packageName",
+     "l": 12
+    },
+    {
+     "n": "js_ts",
+     "t": "packageName",
+     "l": 13
+    },
+    {
+     "n": "py_ts",
+     "t": "packageName",
+     "l": 14
+    },
+    {
+     "n": "rs_ts",
+     "t": "packageName",
+     "l": 15
+    },
+    {
+     "n": "sitter",
+     "t": "packageName",
+     "l": 8
+    },
+    {
+     "n": "ts_ts",
+     "t": "packageName",
+     "l": 16
+    },
+    {
+     "n": "internal.uniqueSorted",
+     "t": "func",
+     "l": 319
+    },
+    {
+     "n": "internal.walk",
+     "t": "func",
+     "l": 238
+    }
+   ]
+  },
+  "internal/parser_test.go": {
+   "lang": "go",
+   "loc": 128,
+   "imports": [
+    "reflect",
+    "testing"
+   ],
+   "symbols": [
+    {
+     "n": "internal.TestExtractImportsByLanguage",
+     "t": "func",
+     "l": 8,
+     "p": true
+    },
+    {
+     "n": "internal.TestGetLanguageUnknown",
+     "t": "func",
+     "l": 123,
+     "p": true
+    },
+    {
+     "n": "internal",
+     "t": "package",
+     "l": 1
+    }
+   ]
+  },
+  "internal/structs.go": {
+   "lang": "go",
+   "loc": 51,
+   "imports": [],
+   "symbols": [
+    {
+     "n": "internal.CTag.Access",
+     "t": "method",
+     "l": 37,
+     "p": true
+    },
+    {
+     "n": "internal.AnalysisResult",
+     "t": "struct",
+     "l": 42,
+     "p": true
+    },
+    {
+     "n": "internal.CTag",
+     "t": "struct",
+     "l": 30,
+     "p": true
+    },
+    {
+     "n": "internal.Location.File",
+     "t": "method",
+     "l": 19,
+     "p": true
+    },
+    {
+     "n": "internal.FileAnalysis",
+     "t": "struct",
+     "l": 47,
+     "p": true
+    },
+    {
+     "n": "internal.FileAnalysis.FileInfo",
+     "t": "method",
+     "l": 48,
+     "p": true
+    },
+    {
+     "n": "internal.FileInfo",
+     "t": "struct",
+     "l": 11,
+     "p": true
+    },
+    {
+     "n": "internal.Output.Files",
+     "t": "method",
+     "l": 26,
+     "p": true
+    },
+    {
+     "n": "internal.AnalysisResult.Files",
+     "t": "method",
+     "l": 43,
+     "p": true
+    },
+    {
+     "n": "internal.Output.Generated",
+     "t": "method",
+     "l": 25,
+     "p": true
+    },
+    {
+     "n": "internal.FileInfo.Imports",
+     "t": "method",
+     "l": 14,
+     "p": true
+    },
+    {
+     "n": "internal.Output.Index",
+     "t": "method",
+     "l": 27,
+     "p": true
+    },
+    {
+     "n": "internal.FileAnalysis.Index",
+     "t": "method",
+     "l": 49,
+     "p": true
+    },
+    {
+     "n": "internal.AnalysisResult.Index",
+     "t": "method",
+     "l": 44,
+     "p": true
+    },
+    {
+     "n": "internal.CTag.Kind",
+     "t": "method",
+     "l": 36,
+     "p": true
+    },
+    {
+     "n": "internal.FileInfo.LOC",
+     "t": "method",
+     "l": 13,
+     "p": true
+    },
+    {
+     "n": "internal.FileInfo.Lang",
+     "t": "method",
+     "l": 12,
+     "p": true
+    },
+    {
+     "n": "internal.CTag.Line",
+     "t": "method",
+     "l": 35,
+     "p": true
+    },
+    {
+     "n": "internal.Symbol.Line",
+     "t": "method",
+     "l": 6,
+     "p": true
+    },
+    {
+     "n": "internal.Location.Line",
+     "t": "method",
+     "l": 20,
+     "p": true
+    },
+    {
+     "n": "internal.Location",
+     "t": "struct",
+     "l": 18,
+     "p": true
+    },
+    {
+     "n": "internal.CTag.Name",
+     "t": "method",
+     "l": 32,
+     "p": true
+    },
+    {
+     "n": "internal.Symbol.Name",
+     "t": "method",
+     "l": 4,
+     "p": true
+    },
+    {
+     "n": "internal.Output",
+     "t": "struct",
+     "l": 23,
+     "p": true
+    },
+    {
+     "n": "internal.CTag.Path",
+     "t": "method",
+     "l": 33,
+     "p": true
+    },
+    {
+     "n": "internal.CTag.Pattern",
+     "t": "method",
+     "l": 34,
+     "p": true
+    },
+    {
+     "n": "internal.Symbol.Public",
+     "t": "method",
+     "l": 7,
+     "p": true
+    },
+    {
+     "n": "internal.CTag.Scope",
+     "t": "method",
+     "l": 38,
+     "p": true
+    },
+    {
+     "n": "internal.CTag.ScopeKind",
+     "t": "method",
+     "l": 39,
+     "p": true
+    },
+    {
+     "n": "internal.Symbol.Sig",
+     "t": "method",
+     "l": 8,
+     "p": true
+    },
+    {
+     "n": "internal.Symbol",
+     "t": "struct",
+     "l": 3,
+     "p": true
+    },
+    {
+     "n": "internal.FileInfo.Symbols",
+     "t": "method",
+     "l": 15,
+     "p": true
+    },
+    {
+     "n": "internal.CTag.Type",
+     "t": "method",
+     "l": 31,
+     "p": true
+    },
+    {
+     "n": "internal.Symbol.Type",
+     "t": "method",
+     "l": 5,
+     "p": true
+    },
+    {
+     "n": "internal.Output.Version",
+     "t": "method",
+     "l": 24,
+     "p": true
+    },
+    {
+     "n": "internal",
+     "t": "package",
+     "l": 1
+    }
+   ]
+  },
+  "internal/symbols.go": {
+   "lang": "go",
+   "loc": 109,
+   "imports": [
+    "path/filepath",
+    "strings",
+    "unicode",
+    "unicode/utf8"
+   ],
+   "symbols": [
+    {
+     "n": "internal.AddIndexLocation",
+     "t": "func",
+     "l": 59,
+     "p": true
+    },
+    {
+     "n": "internal.BuildSymbols",
+     "t": "func",
+     "l": 31,
+     "p": true
+    },
+    {
+     "n": "internal.IsPublicSymbol",
+     "t": "func",
+     "l": 77,
+     "p": true
+    },
+    {
+     "n": "internal.MapKind",
+     "t": "func",
+     "l": 10,
+     "p": true
+    },
+    {
+     "n": "internal.MergeIndexLocation",
+     "t": "func",
+     "l": 55,
+     "p": true
+    },
+    {
+     "n": "internal",
+     "t": "package",
+     "l": 1
+    },
+    {
+     "n": "internal.qualifiedIndexName",
+     "t": "func",
+     "l": 73
+    },
+    {
+     "n": "internal.startsWithUpper",
+     "t": "func",
+     "l": 105
+    }
+   ]
+  },
+  "internal/symbols_test.go": {
+   "lang": "go",
+   "loc": 41,
+   "imports": [
+    "testing"
+   ],
+   "symbols": [
+    {
+     "n": "internal.TestBuildSymbolsMarksPublicSymbols",
+     "t": "func",
+     "l": 5,
+     "p": true
+    },
+    {
+     "n": "internal.TestMergeIndexLocationKeepsDuplicateSymbols",
+     "t": "func",
+     "l": 22,
+     "p": true
+    },
+    {
+     "n": "internal",
+     "t": "package",
+     "l": 1
+    }
+   ]
+  }
+ },
+ "idx": {
+  "BINARY_NAME": {
+   "f": "Makefile",
+   "l": 1
+  },
+  "CMD_PATH": {
+   "f": "Makefile",
+   "l": 2
+  },
+  "build": {
+   "f": "Makefile",
+   "l": 4
+  },
+  "c_ts": {
+   "f": "internal/parser.go",
+   "l": 9
+  },
+  "clean": {
+   "f": "Makefile",
+   "l": 10
+  },
+  "cpp_ts": {
+   "f": "internal/parser.go",
+   "l": 10
+  },
+  "gitignore": {
+   "f": "internal/analyzer.go",
+   "l": 8
+  },
+  "go_ts": {
+   "f": "internal/parser.go",
+   "l": 11
+  },
+  "internal": {
+   "f": "internal/analyzer.go",
+   "l": 1
+  },
+  "internal.AddIndexLocation": {
+   "f": "internal/symbols.go",
+   "l": 59
+  },
+  "internal.AnalysisResult": {
+   "f": "internal/structs.go",
+   "l": 42
+  },
+  "internal.AnalysisResult.Files": {
+   "f": "internal/structs.go",
+   "l": 43
+  },
+  "internal.AnalysisResult.Index": {
+   "f": "internal/structs.go",
+   "l": 44
+  },
+  "internal.AnalyzeFile": {
+   "f": "internal/analyzer.go",
+   "l": 11
+  },
+  "internal.AnalyzeRepo": {
+   "f": "internal/analyzer.go",
+   "l": 41
+  },
+  "internal.BuildOutput": {
+   "f": "internal/output.go",
+   "l": 7
+  },
+  "internal.BuildSymbols": {
+   "f": "internal/symbols.go",
+   "l": 31
+  },
+  "internal.CTag": {
+   "f": "internal/structs.go",
+   "l": 30
+  },
+  "internal.CTag.Access": {
+   "f": "internal/structs.go",
+   "l": 37
+  },
+  "internal.CTag.Kind": {
+   "f": "internal/structs.go",
+   "l": 36
+  },
+  "internal.CTag.Line": {
+   "f": "internal/structs.go",
+   "l": 35
+  },
+  "internal.CTag.Name": {
+   "f": "internal/structs.go",
+   "l": 32
+  },
+  "internal.CTag.Path": {
+   "f": "internal/structs.go",
+   "l": 33
+  },
+  "internal.CTag.Pattern": {
+   "f": "internal/structs.go",
+   "l": 34
+  },
+  "internal.CTag.Scope": {
+   "f": "internal/structs.go",
+   "l": 38
+  },
+  "internal.CTag.ScopeKind": {
+   "f": "internal/structs.go",
+   "l": 39
+  },
+  "internal.CTag.Type": {
+   "f": "internal/structs.go",
+   "l": 31
+  },
+  "internal.Call": {
+   "f": "internal/consts.go",
+   "l": 3
+  },
+  "internal.Call.Callee": {
+   "f": "internal/consts.go",
+   "l": 5
+  },
+  "internal.Call.Caller": {
+   "f": "internal/consts.go",
+   "l": 4
+  },
+  "internal.Dependency": {
+   "f": "internal/consts.go",
+   "l": 8
+  },
+  "internal.Dependency.Source": {
+   "f": "internal/consts.go",
+   "l": 9
+  },
+  "internal.Dependency.Target": {
+   "f": "internal/consts.go",
+   "l": 10
+  },
+  "internal.DetectLanguage": {
+   "f": "internal/lang.go",
+   "l": 5
+  },
+  "internal.ExtractImports": {
+   "f": "internal/parser.go",
+   "l": 68
+  },
+  "internal.FileAnalysis": {
+   "f": "internal/structs.go",
+   "l": 47
+  },
+  "internal.FileAnalysis.FileInfo": {
+   "f": "internal/structs.go",
+   "l": 48
+  },
+  "internal.FileAnalysis.Index": {
+   "f": "internal/structs.go",
+   "l": 49
+  },
+  "internal.FileInfo": {
+   "f": "internal/structs.go",
+   "l": 11
+  },
+  "internal.FileInfo.Imports": {
+   "f": "internal/structs.go",
+   "l": 14
+  },
+  "internal.FileInfo.LOC": {
+   "f": "internal/structs.go",
+   "l": 13
+  },
+  "internal.FileInfo.Lang": {
+   "f": "internal/structs.go",
+   "l": 12
+  },
+  "internal.FileInfo.Symbols": {
+   "f": "internal/structs.go",
+   "l": 15
+  },
+  "internal.GetLanguage": {
+   "f": "internal/parser.go",
+   "l": 24
+  },
+  "internal.GetTags": {
+   "f": "internal/ctags.go",
+   "l": 10
+  },
+  "internal.IsDir": {
+   "f": "internal/analyzer.go",
+   "l": 88
+  },
+  "internal.IsPublicSymbol": {
+   "f": "internal/symbols.go",
+   "l": 77
+  },
+  "internal.LanguageDefinition": {
+   "f": "internal/parser.go",
+   "l": 19
+  },
+  "internal.LanguageDefinition.Imports": {
+   "f": "internal/parser.go",
+   "l": 21
+  },
+  "internal.LanguageDefinition.Language": {
+   "f": "internal/parser.go",
+   "l": 20
+  },
+  "internal.Location": {
+   "f": "internal/structs.go",
+   "l": 18
+  },
+  "internal.Location.File": {
+   "f": "internal/structs.go",
+   "l": 19
+  },
+  "internal.Location.Line": {
+   "f": "internal/structs.go",
+   "l": 20
+  },
+  "internal.MapKind": {
+   "f": "internal/symbols.go",
+   "l": 10
+  },
+  "internal.MergeFileAnalysis": {
+   "f": "internal/analyzer.go",
+   "l": 97
+  },
+  "internal.MergeIndexLocation": {
+   "f": "internal/symbols.go",
+   "l": 55
+  },
+  "internal.Output": {
+   "f": "internal/structs.go",
+   "l": 23
+  },
+  "internal.Output.Files": {
+   "f": "internal/structs.go",
+   "l": 26
+  },
+  "internal.Output.Generated": {
+   "f": "internal/structs.go",
+   "l": 25
+  },
+  "internal.Output.Index": {
+   "f": "internal/structs.go",
+   "l": 27
+  },
+  "internal.Output.Version": {
+   "f": "internal/structs.go",
+   "l": 24
+  },
+  "internal.Symbol": {
+   "f": "internal/structs.go",
+   "l": 3
+  },
+  "internal.Symbol.Line": {
+   "f": "internal/structs.go",
+   "l": 6
+  },
+  "internal.Symbol.Name": {
+   "f": "internal/structs.go",
+   "l": 4
+  },
+  "internal.Symbol.Public": {
+   "f": "internal/structs.go",
+   "l": 7
+  },
+  "internal.Symbol.Sig": {
+   "f": "internal/structs.go",
+   "l": 8
+  },
+  "internal.Symbol.Type": {
+   "f": "internal/structs.go",
+   "l": 5
+  },
+  "internal.TestBuildSymbolsMarksPublicSymbols": {
+   "f": "internal/symbols_test.go",
+   "l": 5
+  },
+  "internal.TestDetectLanguage": {
+   "f": "internal/lang_test.go",
+   "l": 5
+  },
+  "internal.TestExtractImportsByLanguage": {
+   "f": "internal/parser_test.go",
+   "l": 8
+  },
+  "internal.TestGetLanguageUnknown": {
+   "f": "internal/parser_test.go",
+   "l": 123
+  },
+  "internal.TestMergeIndexLocationKeepsDuplicateSymbols": {
+   "f": "internal/symbols_test.go",
+   "l": 22
+  },
+  "internal.cleanStringLiteral": {
+   "f": "internal/parser.go",
+   "l": 302
+  },
+  "internal.collectNodeText": {
+   "f": "internal/parser.go",
+   "l": 250
+  },
+  "internal.extractBazelImports": {
+   "f": "internal/parser.go",
+   "l": 217
+  },
+  "internal.extractCImports": {
+   "f": "internal/parser.go",
+   "l": 200
+  },
+  "internal.extractGoImports": {
+   "f": "internal/parser.go",
+   "l": 107
+  },
+  "internal.extractJavaImports": {
+   "f": "internal/parser.go",
+   "l": 178
+  },
+  "internal.extractJavaScriptImports": {
+   "f": "internal/parser.go",
+   "l": 127
+  },
+  "internal.extractPythonImports": {
+   "f": "internal/parser.go",
+   "l": 89
+  },
+  "internal.extractRustImports": {
+   "f": "internal/parser.go",
+   "l": 158
+  },
+  "internal.firstBazelLoadArg": {
+   "f": "internal/parser.go",
+   "l": 284
+  },
+  "internal.firstChild": {
+   "f": "internal/parser.go",
+   "l": 271
+  },
+  "internal.firstNodeText": {
+   "f": "internal/parser.go",
+   "l": 262
+  },
+  "internal.qualifiedIndexName": {
+   "f": "internal/symbols.go",
+   "l": 73
+  },
+  "internal.startsWithUpper": {
+   "f": "internal/symbols.go",
+   "l": 105
+  },
+  "internal.uniqueSorted": {
+   "f": "internal/parser.go",
+   "l": 319
+  },
+  "internal.walk": {
+   "f": "internal/parser.go",
+   "l": 238
+  },
+  "internal/consts.go#internal": {
+   "f": "internal/consts.go",
+   "l": 1
+  },
+  "internal/ctags.go#internal": {
+   "f": "internal/ctags.go",
+   "l": 1
+  },
+  "internal/lang.go#internal": {
+   "f": "internal/lang.go",
+   "l": 1
+  },
+  "internal/lang_test.go#internal": {
+   "f": "internal/lang_test.go",
+   "l": 1
+  },
+  "internal/output.go#internal": {
+   "f": "internal/output.go",
+   "l": 1
+  },
+  "internal/parser.go#internal": {
+   "f": "internal/parser.go",
+   "l": 1
+  },
+  "internal/parser_test.go#internal": {
+   "f": "internal/parser_test.go",
+   "l": 1
+  },
+  "internal/structs.go#internal": {
+   "f": "internal/structs.go",
+   "l": 1
+  },
+  "internal/symbols.go#internal": {
+   "f": "internal/symbols.go",
+   "l": 1
+  },
+  "internal/symbols_test.go#internal": {
+   "f": "internal/symbols_test.go",
+   "l": 1
+  },
+  "java_ts": {
+   "f": "internal/parser.go",
+   "l": 12
+  },
+  "js_ts": {
+   "f": "internal/parser.go",
+   "l": 13
+  },
+  "main": {
+   "f": "cmd/hermes/main.go",
+   "l": 1
+  },
+  "main.main": {
+   "f": "cmd/hermes/main.go",
+   "l": 11
+  },
+  "py_ts": {
+   "f": "internal/parser.go",
+   "l": 14
+  },
+  "rs_ts": {
+   "f": "internal/parser.go",
+   "l": 15
+  },
+  "run": {
+   "f": "Makefile",
+   "l": 7
+  },
+  "sitter": {
+   "f": "internal/parser.go",
+   "l": 8
+  },
+  "ts_ts": {
+   "f": "internal/parser.go",
+   "l": 16
+  }
+ }
+}

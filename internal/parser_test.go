@@ -58,6 +58,56 @@ from pathlib import Path
 `,
 			want: []string{"json", "os", "pathlib"},
 		},
+		{
+			name: "java",
+			lang: "java",
+			content: `import java.util.List;
+import static java.util.Collections.emptyList;
+`,
+			want: []string{"java.util.Collections.emptyList", "java.util.List"},
+		},
+		{
+			name: "c",
+			lang: "c",
+			content: `#include <stdio.h>
+#include "local.h"
+`,
+			want: []string{"local.h", "stdio.h"},
+		},
+		{
+			name: "cpp",
+			lang: "cpp",
+			content: `#include <vector>
+#include "widget.hpp"
+`,
+			want: []string{"vector", "widget.hpp"},
+		},
+		{
+			name: "bazel",
+			lang: "bazel",
+			content: `load("@rules_go//go:def.bzl", "go_library")
+load("//tools:defs.bzl", "custom_rule")
+`,
+			want: []string{"//tools:defs.bzl", "@rules_go//go:def.bzl"},
+		},
+		{
+			name: "makefile",
+			lang: "makefile",
+			content: `include common.mk
+build:
+	go build ./...
+`,
+			want: []string{},
+		},
+		{
+			name: "markdown",
+			lang: "markdown",
+			content: `# Notes
+
+See [README](README.md).
+`,
+			want: []string{},
+		},
 	}
 
 	for _, tt := range tests {

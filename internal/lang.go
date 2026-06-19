@@ -3,25 +3,36 @@ package internal
 import "path/filepath"
 
 func DetectLanguage(path string) string {
+	switch filepath.Base(path) {
+	case "BUILD", "BUILD.bazel", "MODULE.bazel", "WORKSPACE", "WORKSPACE.bazel":
+		return "bazel"
+	case "Makefile":
+		return "makefile"
+	}
+
 	switch filepath.Ext(path) {
 	case ".py":
 		return "python"
 	case ".go":
 		return "go"
-	case ".js":
+	case ".js", ".jsx":
 		return "javascript"
-	case ".ts":
+	case ".ts", ".tsx":
 		return "typescript"
 	case ".rs":
 		return "rust"
-	case ".c":
-		return "c"
-	case ".bazel":
-		return "bazel"
-	case ".cpp":
-		return "cpp"
 	case ".java":
 		return "java"
+	case ".c":
+		return "c"
+	case ".bazel", ".bzl":
+		return "bazel"
+	case ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp", ".hxx":
+		return "cpp"
+	case ".mk":
+		return "makefile"
+	case ".md", ".markdown":
+		return "markdown"
 	case ".lua":
 		return "lua"
 	default:
