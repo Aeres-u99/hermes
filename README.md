@@ -114,6 +114,60 @@ No blind repository exploration required.
 
 ---
 
+#### 📦 .hermesignore
+
+Hermes supports a `.hermesignore` file to exclude files and directories that provide little or no value for code navigation.
+
+Ignoring generated code, vendored dependencies, documentation, test fixtures, repository metadata, and build artifacts can significantly reduce index size, indexing time, and query noise.
+
+A well-tuned `.hermesignore` helps Hermes focus on implementation code rather than auxiliary repository content.
+
+### Example
+
+```gitignore
+# Repository metadata
+.git/**
+.github/**
+
+# Dependencies
+vendor/
+node_modules/
+
+# Documentation
+docs/
+*.md
+
+# Generated files
+**/zz_generated.*
+**/*_generated.go
+
+# Test fixtures
+**/testdata/
+**/*_test.go
+
+# Build artifacts
+dist/
+build/
+tmp/
+
+# IDE files
+.idea/
+.vscode/
+```
+
+### Why Use `.hermesignore`?
+
+- ⚡ Faster indexing
+- 📉 Smaller index size
+- 🎯 Better retrieval precision
+- 💰 Lower token consumption
+- 🔍 Reduced search noise
+
+Hermes is designed around the principle that not all repository content is equally valuable for navigation. A carefully curated `.hermesignore` allows the index to focus on the code that matters most.
+
+> **Tip:** For large repositories such as Kubernetes, Loki, or Terraform, excluding `.git/**`, vendored dependencies, generated files, and documentation can dramatically reduce index size while preserving the vast majority of implementation-relevant symbols.
+
+---
 # 🚀 Why Hermes Matters
 
 Modern LLM workflows spend the majority of their time and tokens exploring repositories.
