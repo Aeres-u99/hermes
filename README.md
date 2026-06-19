@@ -643,6 +643,7 @@ Done.
 
 # 🛣 Roadmap
 
+* [ ] [TODO](TODO.md)
 * [ ] Incremental indexing
 * [ ] Multi-language support
 * [ ] Cross-reference graph
