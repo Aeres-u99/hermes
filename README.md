@@ -1,261 +1,386 @@
-# Hermes
+<div align="center">
 
-Hermes is a lightweight code mapping utility designed for AI-assisted development workflows.
+<img src="assets/logo.png" alt="Hermes Logo" width="220"/>
 
-Instead of feeding an entire repository to an LLM, Hermes generates a compact semantic map of the codebase containing files, imports, symbols, and symbol locations. The resulting map can be used alongside the repository tree and targeted source files to dramatically reduce context requirements.
+# Hermes <img src="assets/wing.png" width="32"/>
 
-Hermes follows a simple philosophy:
+### Symbolic Code Index. Instant Navigation.
 
-* Keep it small.
-* Keep it fast.
-* Keep it language-agnostic.
-* Generate structure, not explanations.
-* Let the LLM decide what code to read next.
+**A deterministic code indexing and retrieval system for AI-assisted development.**
 
-## Why Hermes?
+Hermes builds a rich, queryable symbol index of your entire codebase so LLMs can find the right code—fast. Instead of exploring millions of tokens, ask Hermes and jump directly to what matters.
 
-Large repositories quickly exceed practical context limits.
 
-Most AI coding assistants spend tokens reading files that are irrelevant to the requested change.
 
-Hermes generates a compact index that answers:
+![Status](https://img.shields.io/badge/status-stable-brightgreen)  
+![License](https://img.shields.io/badge/license-MIT-blue)  
+![Built With](https://img.shields.io/badge/built%20with-Go-00ADD8)  
+![Tree-sitter](https://img.shields.io/badge/parser-Tree--sitter-green)
 
-* What files exist?
-* What language is each file?
-* What symbols are defined?
-* Where are those symbols located?
-* What imports does each file use?
 
-This allows an AI workflow such as:
 
-Repository Tree
-→ Hermes Map
-→ User Request
-→ Targeted File Reads
-→ Code Modification
 
-Instead of:
+</div>
 
+---
+
+# ✨ Key Benefits
+
+| 🎯 Direct Navigation                                                    | ⚡ High Efficiency                                                | 💰 Lower Cost                                    | 🔍 Works at Scale                           |
+| ----------------------------------------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------ | ------------------------------------------- |
+| Jump directly to implementations without exploring the repository tree. | Reduce repository exploration through targeted symbol retrieval. | Fewer searches, fewer tool calls, lower latency. | Designed for medium and large repositories. |
+
+---
+
+# 📖 What is Hermes?
+
+Hermes is a repository indexing and retrieval system that produces a structured symbol index (`hermes.json`) of your codebase.
+
+You can then query this index using simple tools such as:
+
+* grep
+* jq
+* ripgrep
+* Claude Code
+* Aider
+* Custom agents
+
+Instead of feeding your entire repository to an LLM, Hermes retrieves only the relevant functions, types, files, and locations.
+
+```text
 Repository
-→ Dump Everything Into Context
-→ Hope For The Best
+    │
+    ▼
+ Hermes Index
+    │
+    ▼
+ grep / jq / rg
+    │
+    ▼
+ Relevant Symbols
+    │
+    ▼
+      LLM
+```
 
-## Features
+---
 
-### Repository Analysis
+# ⚙️ How It Works
 
-Analyze an entire repository and generate a unified semantic map.
+### 1️⃣ Index Generation
 
-### File Analysis
-
-Analyze individual files.
-
-### Symbol Extraction
-
-Uses Universal CTags to extract:
+Hermes parses the repository using Tree-sitter and extracts:
 
 * Functions
 * Methods
-* Classes
 * Structs
-* Variables
+* Interfaces
 * Constants
-* Packages
-
-### Import Extraction
-
-Uses Tree-sitter to extract language-specific imports.
-
-### Cross-File Index
-
-Builds a global symbol index:
-
-```json
-{
-  "AnalyzerRepo": {
-    "f": "internal/analyzer.go",
-    "l": 42
-  }
-}
-```
-
-### Language Detection
-
-Currently supports:
-
-* Go
-* Python
-* JavaScript
-* TypeScript
-* Rust
-* C
-* C++
-* Java
-* Lua
-* Bazel
-
-### Ignore Support
-
-Hermes supports a `.hermesignore` file for excluding:
-
-* Generated code
-* Vendor dependencies
-* Build artifacts
-* Grammar repositories
-* Test repositories
-* Large irrelevant directories
-
-Example:
-
-```text
-.git/
-vendor/
-node_modules/
-internal/grammar/**
-
-*.json
-!hermes.json
-```
-
-### Compact JSON Schema
-
-Hermes intentionally uses short field names to reduce token consumption.
-
-Example:
-
-```json
-{
-  "n": "AnalyzeRepo",
-  "t": "fn",
-  "l": 42
-}
-```
-
-Where:
-
-| Field | Meaning     |
-| ----- | ----------- |
-| n     | Symbol Name |
-| t     | Symbol Type |
-| l     | Line Number |
-
-## Installation
-
-### Requirements
-
-* Go 1.24+
-* Universal CTags
-
-Install CTags:
-
-Ubuntu:
+* Variables
+* Imports
+* File Locations
 
 ```bash
-sudo apt install universal-ctags
-```
-
-Arch:
-
-```bash
-sudo pacman -S ctags
-```
-
-macOS:
-
-```bash
-brew install universal-ctags
-```
-
-Build:
-
-```bash
-make
-```
-
-## Usage
-
-Analyze a file:
-
-```bash
-./hermes -input internal/analyzer.go
-```
-
-Analyze a repository:
-
-```bash
-./hermes -input .
+hermes -input . > hermes.json
 ```
 
 Output:
 
-```json
-{
-  "files": {
-    "internal/analyzer.go": {
-      "lang": "go",
-      "symbols": [...]
-    }
-  },
-  "idx": {
-    "AnalyzeRepo": {
-      "f": "internal/analyzer.go",
-      "l": 42
-    }
-  }
-}
+```text
+hermes.json
 ```
 
-## Example AI Workflow
+---
 
-Generate a repository map:
+### 2️⃣ Query
+
+Search for symbols using standard UNIX tools.
 
 ```bash
-./hermes -input . > hermes.json
+grep -C3 "ConfigureProvider" hermes.json
 ```
 
-Provide the following to the LLM:
+or
 
-1. Repository tree
-2. hermes.json
-3. User request
+```bash
+jq '.symbols[] | select(.name=="ConfigureProvider")' hermes.json
+```
 
-The LLM can then determine which files are relevant before reading source code.
+---
 
-This reduces unnecessary context consumption and improves modification accuracy.
+### 3️⃣ Navigate
 
-## Current Status
+Open the exact files and locations returned by Hermes.
 
-Implemented:
+No blind repository exploration required.
 
-* Repository analysis
-* File analysis
-* Universal CTags integration
-* Tree-sitter parsing
-* Symbol indexing
-* Import extraction
-* `.hermesignore`
-* Compact JSON output
+---
 
-Planned:
+# 🚀 Why Hermes Matters
 
-* Additional language parsers
-* Incremental updates
-* Filesystem watcher
-* Persistent in-memory index
-* LSP integration
+Modern LLM workflows spend the majority of their time and tokens exploring repositories.
 
-## Philosophy
+Typical workflow:
 
-Hermes is intentionally narrow in scope.
+```text
+Search
+ ↓
+Open File
+ ↓
+Wrong File
+ ↓
+Search Again
+ ↓
+Open More Files
+ ↓
+Find Implementation
+```
 
-It does not:
+Hermes transforms that into:
 
-* Build call graphs
-* Perform static analysis
-* Generate embeddings
-* Index documentation
-* Replace language servers
+```text
+Lookup Symbol
+ ↓
+Open Correct File
+ ↓
+Done
+```
 
-Hermes exists to answer one question efficiently:
+Benefits:
 
-"What does this repository look like?"
+* Fewer file reads
+* Lower token usage
+* Fewer tool calls
+* Faster navigation
+* Lower latency
+* Better agent performance
+
+---
+
+# 📊 Benchmarks
+
+Hermes has been benchmarked against three real-world repositories of different scales.
+
+| Repository | Files  | LOC  | Runtime (s) | Full Map Tokens | Query Tokens | Retrieval Reduction |
+| ---------- | ------ | ---- | ----------- | --------------- | ------------ | ------------------- |
+| Kubernetes | 30,536 | 5.0M | 66.2        | 14.7M           | 2,059        | 99.986%             |
+| Loki       | 17,160 | 510k | 11.6        | 8.4M            | 880          | 99.990%             |
+| Terraform  | 5,411  | 667k | 13.8        | 2.0M            | 5,340        | 99.732%             |
+
+---
+
+## Cross-Repository Summary
+
+| Repository | Exploration Collapse | Cost Reduction |
+| ---------- | -------------------- | -------------- |
+| Kubernetes | 60.0%                | 49.6%          |
+| Loki       | 50.0%                | 50.2%          |
+| Terraform  | 62.5%                | 7.2%           |
+
+---
+
+## Detailed Reports
+
+* [Kubernetes Benchmark](benchmarks/Kubernetes-Report.md)
+* [Loki Benchmark](benchmarks/Loki-Report.md)
+* [Terraform Benchmark](benchmarks/Terraform-Report.md)
+
+---
+
+## Retrieval Reduction
+
+Hermes is a retrieval system, not a context-stuffing system.
+
+| Repository | Full Map Tokens | Query Tokens |
+| ---------- | --------------- | ------------ |
+| Kubernetes | 14,718,000      | 2,059        |
+| Loki       | 8,396,000       | 880          |
+| Terraform  | 1,990,000       | 5,340        |
+
+Hermes consistently reduces retrieval payloads by over **99.7%**.
+
+The entire repository is never sent to the model.
+
+Only the relevant symbols are retrieved.
+
+---
+
+# 🔎 First Lookup Accuracy
+
+| Repository | First Lookup Correct  |
+| ---------- | --------------------- |
+| Kubernetes | ✅ Yes                 |
+| Loki       | ✅ Yes                 |
+| Terraform  | ❌ Required Refinement |
+
+Hermes performs best when queried using specific symbols.
+
+Broad interfaces and common method names may require one or more refinement steps.
+
+---
+
+# 📦 When To Use Hermes
+
+Hermes is optimized for medium and large repositories.
+
+| Repository Size      | Expected Benefit | Recommendation            |
+| -------------------- | ---------------- | ------------------------- |
+| < 100 files          | Low              | Generally not recommended |
+| 100 – 1,000 files    | Medium           | Situational benefit       |
+| 1,000 – 10,000 files | High             | Strong benefit            |
+| 10,000+ files        | Very High        | Primary target            |
+
+Smaller repositories may not see enough benefit to offset indexing overhead.
+
+---
+
+# 🔄 Index Once. Query Many.
+
+Index generation is a one-time operation.
+
+The resulting index can be reused across:
+
+* Feature development
+* Bug investigation
+* Architecture discovery
+* Code reviews
+* AI-assisted programming
+* Documentation generation
+
+```text
+Repository
+    │
+    ▼
+ Generate Index
+    │
+    ▼
+  hermes.json
+    │
+    ├── Query #1
+    ├── Query #2
+    ├── Query #3
+    ├── Query #4
+    └── Query #N
+```
+
+The generation cost is paid once. Or, if post Query #1 the syntax or structure has changed significantly, regenerate the hermes.json to ensure that the map is not stale.
+
+The retrieval benefit compounds over time.
+
+---
+
+# 🏗 Architecture
+
+```text
+Repository
+    │
+    ▼
+Tree-sitter Parser
+    │
+    ▼
+Hermes Index
+    │
+    ├── Functions
+    ├── Methods
+    ├── Structs
+    ├── Interfaces
+    ├── Variables
+    ├── Constants
+    └── Imports
+    │
+    ▼
+grep / jq / rg
+    │
+    ▼
+LLM / Agent
+```
+
+---
+
+# 🧭 Design Principles
+
+### Retrieval Over Stuffing
+
+Never send the entire repository to the model.
+
+Retrieve only the relevant implementation details.
+
+### Deterministic
+
+Same repository → same index.
+
+No embeddings.
+
+No probabilistic ranking.
+
+### Transparent
+
+Indexes are human-readable and versionable.
+
+You can inspect, diff, and audit every result.
+
+### Tool Friendly
+
+Works with standard UNIX tooling:
+
+* grep
+* jq
+* rg
+* awk
+* sed
+
+### Language Aware
+
+Built on Tree-sitter.
+
+Designed to understand source structure rather than plain text.
+
+---
+
+# ⚡ Quick Start
+
+Generate an index:
+
+```bash
+hermes -input . > hermes.json
+```
+
+Search for a symbol:
+
+```bash
+grep -C3 "MyFunction" hermes.json
+```
+
+Retrieve with jq:
+
+```bash
+jq '.symbols[] | select(.name=="MyFunction")' hermes.json
+```
+
+Open the returned file and line.
+
+Done.
+
+---
+
+# 🛣 Roadmap
+
+* [ ] Incremental indexing
+* [ ] Multi-language support
+* [ ] Cross-reference graph
+  
+  
+
+---
+
+# 🤝 Contributing
+
+Contributions, bug reports, and feature requests are welcome.
+
+Please open an issue or submit a pull request.
+
+---
+
+# 📄 License
+
+TBU
