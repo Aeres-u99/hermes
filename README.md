@@ -244,13 +244,97 @@ Benefits:
 
 ---
 
-# Installation
+# 🛠️ Installation
 
+## Prerequisites
+
+Hermes requires:
+
+- Go 1.24+
+- Universal Ctags
+
+### Install Universal Ctags
+
+#### Ubuntu / Debian
+
+```bash
+sudo apt install universal-ctags
 ```
+
+#### Arch Linux
+
+```bash
+sudo pacman -S universal-ctags
+```
+
+#### macOS
+
+```bash
+brew install universal-ctags
+```
+
+Verify installation:
+
+```bash
+ctags --version
+```
+
+Expected output should contain:
+
+```text
+Universal Ctags
+```
+
+---
+
+## Build Hermes
+
+```bash
 git clone https://github.com/Aeres-u99/hermes.git
+
+cd hermes
+
 make
-sudo install hermes /usr/bin/local
-# Or move it anywhere in the PATH to invoke
+```
+
+---
+
+## Install Hermes
+
+```bash
+sudo install hermes /usr/local/bin/hermes
+```
+
+Verify installation:
+
+```bash
+hermes --help
+```
+
+---
+
+## Generate Your First Index
+
+```bash
+hermes -input .
+```
+
+This generates:
+
+```text
+hermes.json
+```
+
+which can then be queried using:
+
+```bash
+jq -r '.idx | keys[]' hermes.json
+```
+
+or
+
+```bash
+jq -r '.idx["main.main"]' hermes.json
 ```
 
 ---
