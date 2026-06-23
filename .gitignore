@@ -1,5 +1,5 @@
 *pew
-hermes
+bin/
 dist/
 *.json
 !hermes.json

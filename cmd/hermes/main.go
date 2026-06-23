@@ -13,7 +13,7 @@ func main() {
 
 	flag.Usage = func() {
 		w := flag.CommandLine.Output()
-		fmt.Fprintf(w, "%s - The Code Map you will Ever need!", os.Args[0])
+		fmt.Fprintf(w, "%s - The Code Map you will Ever need!\n", os.Args[0])
 		flag.PrintDefaults()
 		fmt.Fprintf(w, "Have Fun!")
 	}
