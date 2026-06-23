@@ -14,6 +14,7 @@ func main() {
 	flag.Usage = func() {
 		w := flag.CommandLine.Output()
 		fmt.Fprintf(w, "%s - The Code Map you will Ever need!\n", os.Args[0])
+		fmt.Fprintf(w, "For custom CTAGS path use Environment Variable HERMES_CTAGS for custom path")
 		flag.PrintDefaults()
 		fmt.Fprintf(w, "Have Fun!")
 	}
