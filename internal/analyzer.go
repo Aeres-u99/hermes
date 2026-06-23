@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -39,6 +40,13 @@ func AnalyzeFile(path string) (*FileAnalysis, error) {
 }
 
 func AnalyzeRepo(root string) (*AnalysisResult, error) {
+	ignoreFile := ".hermesignore"
+	_, err := os.Stat(ignoreFile)
+	if err != nil {
+		if os.IsNotExist(err) {
+			fmt.Printf("Hermes Ignore is Necessary to reduce the Map Size, %s is Missing.\n Exiting ...", ignoreFile)
+		}
+	}
 	gitIgnore, err := gitignore.NewGitIgnore(".hermesignore", root)
 
 	merged := &AnalysisResult{

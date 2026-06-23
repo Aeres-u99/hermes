@@ -3,13 +3,23 @@ package internal
 import (
 	"bytes"
 	"encoding/json"
+	"os"
 	"os/exec"
 	"strings"
 )
 
+func GetCtagsPath() string {
+	if v, ok := os.LookupEnv("HERMES_CTAGS"); ok {
+		return v
+	} else {
+		return "ctags"
+	}
+}
+
 func GetTags(path string) ([]CTag, error) {
+	cmdBin := GetCtagsPath()
 	cmd := exec.Command(
-		"ctags",
+		cmdBin,
 		"--output-format=json",
 		"--fields=+na",
 		path,
