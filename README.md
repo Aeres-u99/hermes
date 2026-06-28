@@ -38,7 +38,7 @@ Hermes builds a rich, queryable symbol index of your entire codebase so LLMs can
   * [3️⃣ Navigate](#3️⃣-navigate)
   * [📦 .hermesignore](#-hermesignore)
 * [🚀 Why Hermes Matters](#-why-hermes-matters)
-* [🛠️ Installation](#installation)
+* [🛠️ Installation](#-installation)
   * [Running Tests](#running-tests)
   * [Cross-Platform Builds](#cross-platform-builds)
 * [📊 Benchmarks](#-benchmarks)
