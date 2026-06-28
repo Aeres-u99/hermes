@@ -310,22 +310,51 @@ Verify the installation:
 hermes --help
 ```
 
+```bash
+hermes --help
+```
+
+#### Manual Installation
+
+Download the appropriate binary from the GitHub Releases page.
+
+Rename it to `hermes`, make it executable, and place it somewhere on your `PATH`:
+
+```bash
+chmod +x hermes-linux-amd64
+mv hermes-linux-amd64 hermes
+sudo mv hermes /usr/local/bin/
+```
+
+Verify:
+
+```bash
+hermes --help
+```
+
+## Upgrading
+
+Run the installer again or Download manually and install:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Aeres-u99/hermes/main/install.sh | bash
+```
+
 ---
 
 ## Build Hermes
 
 ```bash
 git clone https://github.com/Aeres-u99/hermes.git
-
 cd hermes
-
 make
 ```
 
 ---
 
 ## Running Tests
-
+> This is pending, but we do plan to add tests.
+> Sadly this wasn't made using TDD
 ```bash
 make test
 ```
